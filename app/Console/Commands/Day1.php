@@ -39,7 +39,7 @@ class Day1 extends Command
 
     }
 
-    private function part1()
+    private function part1(): void
     {
         $total = 0;
         foreach ($this->lines as $line) {
@@ -49,11 +49,38 @@ class Day1 extends Command
             $total += (int) ($first.$last);
         }
 
-        $this->warn(sprintf("The answer to step 1 is %d", $total));
+        $this->info(sprintf("The answer to step 1 is %d", $total));
     }
 
-    public function part2()
+    public function part2(): void
     {
+        $total = 0;
 
+        $numbers = [
+            'one' =>1,
+            'two' => 2,
+            'three' => 3,
+            'four' => 4,
+            'five' => 5,
+            'six' => 6,
+            'seven' => 7,
+            'eight' => 8,
+            'nine'=> 9,
+        ];
+
+        foreach ($this->lines as $line) {
+            foreach ($numbers as $string => $int) {
+                if(Str::contains($line, $string)){
+                    $line = str_replace($string,  substr($string, 0, 1) . $int . substr($string, -1, 1) , $line);
+                }
+            }
+
+            $first = substr(strpbrk($line, '0123456789'), 0, 1);
+            $last = substr(strpbrk(Str::reverse($line), '0123456789'), 0, 1);
+
+            $total += (int) ($first.$last);
+        }
+
+        $this->info(sprintf("The answer to step 2 is %d", $total));
     }
 }
